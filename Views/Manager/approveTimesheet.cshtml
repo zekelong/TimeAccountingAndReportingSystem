@@ -1,0 +1,51 @@
+@model IEnumerable<TARS.Models.TimesheetRow>
+
+@{
+    ViewBag.Title = "approveTimesheet";
+}
+
+<h2>Approve Timesheet
+@if (ViewBag.timesheet.submitted)
+{
+    if (ViewBag.timesheet.approved)
+    {
+        <small><i>(approved)</i></small> 
+    }
+}
+else
+{
+    <small><i>(not approved)</i></small>
+}
+</h2>
+
+<h3>Employee: @ViewBag.timesheet.worker</h3>
+<b>Pay Period: @Html.Action("getPayPeriod", "User", new {refDate = ViewBag.refDate})</b>
+
+
+<div id="menu" style="float:right;">    
+    @if (ViewBag.timesheet.locked == false)
+    {
+        if (ViewBag.timesheet.approved == true)
+        {
+            @Html.ActionLink("Undo Approved Status", "submitRejectTimesheet", new { id = (int)ViewBag.timesheet.ID })
+            <html> | </html>
+        }
+        else
+        {
+            @Html.ActionLink("Approve", "submitApproveTimesheet", new { id = (int)ViewBag.timesheet.ID })
+            <html> | </html>
+            @Html.ActionLink("Reject", "submitRejectTimesheet", new { id = (int)ViewBag.timesheet.ID })
+            <html> | </html>
+        }
+    }
+    @Html.ActionLink("Back to Employee List", "userManagement", new { refDate = ViewBag.timesheet.periodStart }, null)
+</div>
+<br /><br /><br />
+
+
+<div id="content" style="float:left;">
+
+    <!-- Render the timesheet table -->
+    @Html.Partial("_viewTimesheetPartial")
+
+</div>
