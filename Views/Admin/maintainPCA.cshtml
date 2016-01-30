@@ -1,0 +1,70 @@
+@model IEnumerable<TARS.Models.PcaCode>
+
+@{
+    ViewBag.Title = "PCA Maintanence";
+}
+
+<h2>PCA Maintanence</h2>
+
+
+@if (ViewBag.failedPcaDelete == true)
+{
+    <h3>Error: Can't delete a PCA if Work Efforts are attached.</h3>
+}
+<!-- Option to sort by division -->
+@using (Html.BeginForm())
+{
+    <div class="editor-label"><b>Select Division</b></div>
+    <div class="editor-field"> 
+        @Html.DropDownList("division", (List<SelectListItem>)ViewBag.divisionList, new { @onchange = "this.form.submit();"})     
+    </div>
+    <br />
+}
+<p>@Html.ActionLink("Add PCA", "addPCA")</p>
+<table class="timesheet">
+    <tr>
+        <th class="pca">
+            PcaCode
+        </th>
+        <th class="pca">
+            Description
+        </th>
+        <th class="pca">
+            Division
+        </th>
+        <th class="pca">
+            StartDate
+        </th>
+        <th class="pca">
+            EndDate
+        </th>
+        <th class="options">
+        </th>
+    </tr>
+  @foreach (var item in Model)
+  {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.code)
+        </td>
+        <td class="description">
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td class="description">
+            @Html.DisplayFor(modelItem => item.division)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.startDate)
+            @Html.HiddenFor(modelItem => item.startDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.endDate)
+            @Html.HiddenFor(modelItem => item.endDate)
+        </td>
+        <td class="options">
+            @Html.ActionLink("Edit", "editPCA", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "deletePCA", new { id=item.ID })
+        </td>
+    </tr>
+  }
+</table>
