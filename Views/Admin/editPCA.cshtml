@@ -1,0 +1,68 @@
+@model TARS.Models.PcaCode
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit PCA</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.code)
+
+        <div class="display-label"><b>PcaCode</b></div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.code)
+        </div>
+
+        <p>
+        <div class="editor-label"><b>Description</b></div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.description, 1, 20, null)
+            @Html.ValidationMessageFor(model => model.description)
+        </div>
+        </p>
+
+        <p>
+        <div class="editor-label"><b>Division</b></div>
+        <div class="editor-field">
+            @Html.DropDownListFor(p => p.division, new SelectList(ViewBag.divisionList, "Value", "Text"))
+        </div>
+        </p>
+
+        <p>
+        <div class="editor-label"><b>Start Date</b></div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.startDate)
+            @Html.ValidationMessageFor(model => model.startDate)
+        </div>
+        </p>
+
+        <p>
+        <div class="editor-label"><b>End Date</b></div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.endDate)
+            @Html.ValidationMessageFor(model => model.endDate)
+            @if (ViewBag.endBeforeStartFlag == true)
+            {
+                <html>End date can't be before start date</html>
+            }
+            @if (ViewBag.duplicatePcaFlag == true)
+            {
+                <html>Dates overlap an existing PCA with the same code in @Model.division</html>
+            }
+        </div>
+        </p>
+        <p>
+            <input type="submit" value="Save" /> |
+            @Html.ActionLink("Back to List", "maintainPCA/")
+        </p>
+    </fieldset>
+}
