@@ -1,0 +1,20 @@
+@{
+    ViewBag.Title = "Management";
+}
+
+<h2>Manager</h2>
+
+<p>@Html.ActionLink("User Time Management", "userManagement", new { refDate = DateTime.Now }, null)</p>
+<p>View and approve User timesheets</p>
+
+<p>@Html.ActionLink("Work Effort Management", "weManagement")</p>
+<p>Add, modify, or delete Work Efforts</p>
+
+<p>@Html.ActionLink("View PCA Codes", "searchPca")</p>
+<p>Start dates, end dates, and descriptions of PCA codes</p>
+
+<p>@Html.ActionLink("View All PCA/WorkEffort Associations", "searchPCA_WE")</p>
+<p>Start dates, end dates, and status of PCA/WorkEffort associations</p>
+
+<p>@Html.ActionLink("View History", "viewHistory", new { start = DateTime.Now, end = DateTime.Now })</p>
+<p>All TARS activity</p>
