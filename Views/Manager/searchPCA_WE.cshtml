@@ -1,0 +1,69 @@
+@model IEnumerable<TARS.Models.PCA_WE>
+
+@{
+    ViewBag.Title = "searchPCA_WE";
+}
+
+<h2>PCA/WorkEffort Associations</h2>
+
+
+<table class="timesheet">
+    <tr>
+        <th class="pca">
+            PcaCode
+        </th>
+        <th class="pca">
+            WorkEffort
+        </th>
+        <th class="pca" style="width:auto;">
+            AssociationStart
+        </th>
+        <th class="pca" style="width:auto;">
+            AssociationEnd
+        </th>
+        <th class="pca">
+            Active
+        </th>
+        <th class="options">
+        </th>
+    </tr>
+
+@foreach (var item in Model) 
+{
+    var pcaDescription = Html.Action("getPcaDescriptionFromID", "Manager", new { id = item.PCA });
+    <tr>
+        <td class="description" title="@pcaDescription">
+            @if (pcaDescription.ToString().Length != 0)
+            {
+                @Html.Action("getPcaCodeFromID", "Manager", new { id = item.PCA })
+                <br />
+                @Html.Action("getPcaDivisionFromID", "Manager", new { id = item.PCA })
+            }
+            else
+            {
+                <html>(PCA no longer exists. The Unique ID was @item.PCA)</html>
+            }
+        </td>
+        <td class="description">
+            @Html.Action("getWeDescription", "User", new { id = item.WE })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.associationStartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.associationEndDate)
+        </td>
+        <td>
+            @if (item.active == true)
+            {
+                <html> YES </html>
+            }
+            else
+            {
+                <html> NO </html>
+            }
+        </td>
+    </tr>
+}
+
+</table>
