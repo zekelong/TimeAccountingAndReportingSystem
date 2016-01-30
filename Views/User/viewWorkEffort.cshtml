@@ -1,0 +1,57 @@
+@model TARS.Models.WorkEffort
+
+@{
+    ViewBag.Title = "viewWorkEffort";
+}
+
+<h2>Work Effort Details</h2>
+
+<fieldset>
+    <legend>WorkEffort</legend>
+
+    <div class="display-label"><b>Description</b></div>
+    @Html.TextAreaFor(model => model.description, 1, 50, new{@readonly="readonly"})
+
+    <p>
+    <div class="display-label"><b>Pca Code(s)</b></div>
+    <div class="display-field">
+        @Html.DropDownList("pcaCode", (List<SelectListItem>)ViewBag.pcaList)
+    </div>
+    </p>
+
+    <p>
+    <div class="display-label"><b>Start Date</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.startDate)
+    </div>
+    </p>
+
+    <p>
+    <div class="display-label"><b>End Date</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.endDate)
+    </div>
+    </p>
+
+    <p>
+    <div class="display-label"><b>Comments</b>
+    </div>
+    @Html.TextAreaFor(model => model.comments, 4, 50, new {@readonly="readonly"})
+    </p>
+
+</fieldset>
+<p>
+    <!-- if the user is has manager privileges, let them edit the work effort -->
+    @if (ViewBag.managerFlag == true)
+    {  
+        @Html.ActionLink("Edit", "editWorkEffort", "Manager", new { id = Model.ID }, null)
+        <html> | </html>
+        @Html.ActionLink("Manage Work Efforts", "WeManagement", "Manager")
+        <html> | </html>
+        @Html.ActionLink("View Active Work Efforts", "searchWorkEffort")
+    }
+    else
+    {
+        @Html.ActionLink("Back to List", "searchWorkEffort")
+    }
+</p>
