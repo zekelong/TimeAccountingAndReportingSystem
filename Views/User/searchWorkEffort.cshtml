@@ -1,0 +1,67 @@
+@model IEnumerable<TARS.Models.WorkEffort>
+
+@{
+    ViewBag.Title = "searchWorkEffort";
+}
+
+<h2>Work Efforts</h2>
+
+<!-- if the user has manager privileges, let them edit the work effort -->
+@if (ViewBag.managerFlag == true)
+{  
+    <p>@Html.ActionLink("Manage Work Efforts", "WeManagement", "Manager")</p>
+}
+
+<!-- Display all of the active (not hidden) work efforts -->   
+<table class="timesheet">
+    <tr>
+        <th class="description">
+            Description
+        </th>
+        <th class="workEffort">
+            PcaCode(s)
+        </th>
+        <th class="workEffort">
+            StartDate
+        </th>
+        <th class="workEffort">
+            EndDate
+        </th>
+        <th class="options">
+        </th>
+    </tr>
+
+    @if (Model != null)
+    {
+        int count = -1;
+        foreach (var item in Model)
+        {
+            count++;
+            if (item.hidden == false)
+            {
+                <tr>
+                    <td class="description">
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td>
+                        @Html.DropDownList("pcaCode", (List<SelectListItem>)ViewBag.pcaListOfLists[count])
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.startDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.endDate)
+                    </td>
+
+                    <td class="options">
+                        <!-- If there are comments, provide a link to view them -->
+                        @if ((item.comments != null) && (item.comments.Trim().Length > 0))
+                        {                  
+                            @Html.ActionLink("View Comments", "viewWorkEffort", new { id = item.ID })
+                        }                
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>
