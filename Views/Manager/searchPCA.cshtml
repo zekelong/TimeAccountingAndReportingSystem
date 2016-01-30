@@ -1,0 +1,58 @@
+@model IEnumerable<TARS.Models.PcaCode>
+
+@{
+    ViewBag.Title = "searchPCA";
+}
+
+<h2>@ViewBag.division PCA Codes</h2>
+
+<!-- Option to sort by division -->
+@using (Html.BeginForm())
+{
+    <div class="editor-label"><b>Select Division</b></div>
+    <div class="editor-field"> 
+        @Html.DropDownList("division", (List<SelectListItem>)ViewBag.divisionList, new { @onchange = "this.form.submit();"})     
+    </div>
+    <br />
+}
+
+<table class="timesheet">
+    <tr>
+        <th>
+            PcaCode
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Division
+        </th>
+        <th>
+            StartDate
+        </th>
+        <th>
+            EndDate
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.code)
+        </td>
+        <td class="description">
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td class="description">
+            @Html.DisplayFor(modelItem => item.division)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.startDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.endDate)
+        </td>
+    </tr>
+}
+
+</table>
