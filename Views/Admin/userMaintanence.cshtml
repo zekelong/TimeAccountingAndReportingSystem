@@ -1,0 +1,57 @@
+@model IEnumerable<TARS.Models.TARSUser>
+
+@{
+    ViewBag.Title = "User Maintanence";
+}
+
+<h2>Active Users</h2>
+
+<p>@Html.ActionLink("Add User", "addUser")</p>
+
+<table class="timesheet">
+    <tr>
+        <th>
+            UserName
+        </th>
+        <th>
+            Permission
+        </th>
+        <th>
+            Company
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            End Date
+        </th>
+    </tr>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+    <tr>
+        <td class="name">
+            @Html.DisplayFor(modelItem => item.userName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.permission)
+        </td>
+        <td class="description">
+            @Html.DisplayFor(modelItem => item.company)
+        </td>
+        <td class="description">
+            @Html.DisplayFor(modelItem => item.department)
+        </td>
+        <td class="date">
+            To be implemented
+        </td>
+        <td class="options">
+            @Html.ActionLink("Edit", "editTARSUser") |
+            @Html.ActionLink("End Date", "endDateTARSUser")
+        </td>
+    </tr>
+    }
+}
+</table>
