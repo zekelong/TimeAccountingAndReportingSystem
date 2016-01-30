@@ -1,0 +1,53 @@
+@model TARS.Models.WorkEffort
+
+@{
+    ViewBag.Title = "DeleteWorkEffort";
+}
+
+<h2>Delete Work Effort</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<fieldset>
+    <legend>Work Effort</legend>
+
+    <div class="display-label"><b>PcaCode(s)</b></div>
+    <div class="display-field">
+        @Html.DropDownList("pcaCode", new SelectList(ViewBag.pcaList, Model))
+    </div>
+
+    <p>
+    <div class="display-label"><b>Description</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.description)
+    </div>
+    </p>
+
+    <p>
+    <div class="display-label"><b>StartDate</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.startDate)
+    </div>
+    </p>
+
+    <p>
+    <div class="display-label"><b>EndDate</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.endDate)
+    </div>
+    </p>
+
+    <p>
+    <div class="display-label"><b>Comments</b></div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.comments)
+    </div>
+    </p>
+
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> | 
+        @Html.ActionLink("Back to List", "weManagement")
+    </p>
+}
