@@ -1,0 +1,67 @@
+@model TARS.Models.WorkEffort
+
+@{
+    ViewBag.Title = "EditWorkEffort";
+}
+
+<h2>Edit Work Effort</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        @Html.HiddenFor(model => model.hidden)
+
+        <div class="editor-label"><b>Work Effort Description </b>(100 characters max)</div>
+        @Html.TextAreaFor(model => model.description, 1, 50, null)
+        @Html.ValidationMessageFor(model => model.description)
+
+        <p>
+        <div class="editor-label"><b>PCA Code(s)</b></div>
+        <div class="display-field">
+            <!-- This dropdown should not allow selections, it's just for viewing -->
+            @Html.DropDownList("pcaList", (List<SelectListItem>)ViewBag.pcaList)
+            @Html.HiddenFor(model => model.pcaCode)
+            @if (ViewBag.adminFlag == true)
+            {
+                @Html.ActionLink("Add a PCA Code Association", "addPCA_WE", "Admin", new { weID = Model.ID }, null)
+                <html> | </html>
+                @Html.ActionLink("Remove a PCA Code Association", "deletePCA_WE", "Admin", new { weID = Model.ID }, null)
+            }
+        </div>
+        </p>
+        <p>
+        <div class="editor-label"><b>Start Date</b></div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.startDate)
+            @Html.ValidationMessageFor(model => model.startDate)
+        </div>
+        </p>
+        <p>
+        <div class="editor-label"><b>End Date</b></div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.endDate)
+            @Html.ValidationMessageFor(model => model.endDate)
+            @if (ViewBag.notWithinTimeBounds == true)
+            {
+                <html>Not within the PCA code's time bounds: <b>@Html.Action("getPcaTimeBoundsString", Model.pcaCode) </b></html>
+            } 
+            @if (ViewBag.endBeforeStartFlag == true)
+            {
+                <html>End date can't be before start date</html>
+            } 
+        </div>
+        </p>
+        <p>
+        <div class="editor-label"><b>Comments </b>(250 characters max)</div>
+        @Html.TextAreaFor(model => model.comments, 4, 50, null)
+        @Html.ValidationMessageFor(model => model.comments)
+        </p>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "weManagement/")
+</div>
